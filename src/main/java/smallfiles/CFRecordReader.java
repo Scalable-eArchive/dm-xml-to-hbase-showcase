@@ -18,8 +18,8 @@ import org.apache.hadoop.mapreduce.lib.input.CombineFileSplit;
 public class CFRecordReader extends RecordReader<FileLineWritable, Text> {
 
     private static final String ENCODING = "utf-8";
-    
-    private final byte[] xmlStartTag; 
+
+    private final byte[] xmlStartTag;
     private final byte[] xmlEndTag;
 
     private final long startOffset;
@@ -38,7 +38,7 @@ public class CFRecordReader extends RecordReader<FileLineWritable, Text> {
 
         Path path = split.getPath(index);
         fs = path.getFileSystem(context.getConfiguration());
-        
+
         startOffset = split.getOffset(index);
         end = startOffset + split.getLength(index);
 

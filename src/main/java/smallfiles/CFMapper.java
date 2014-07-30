@@ -19,11 +19,12 @@ public class CFMapper extends Mapper<FileLineWritable, Text, Text, Text> {
 
     private HTable ht;
 
-    private static final String HBASE_DEFAULT_TABLE_NAME = "xmlToHbase"; 
-    
+    private static final String HBASE_DEFAULT_TABLE_NAME = "xmlToHbase";
+
     private static final int HBASE_DEFAULT_BUFFER_SIZE = 1024 * 1024 * 12;
-//    private final Text keyText = new Text();
-//    private final Text valueText = new Text();
+
+    // private final Text keyText = new Text();
+    // private final Text valueText = new Text();
 
     @Override
     protected void setup(Context context) throws IOException {
@@ -31,7 +32,7 @@ public class CFMapper extends Mapper<FileLineWritable, Text, Text, Text> {
         ht.setAutoFlush(true);
         ht.setWriteBufferSize(HBASE_DEFAULT_BUFFER_SIZE);
     }
-    
+
     /**
      * The mapper parses xml, and puts valuable data to Hbase table.
      */
@@ -41,25 +42,25 @@ public class CFMapper extends Mapper<FileLineWritable, Text, Text, Text> {
 
         // This attribute will be the row in the Hbase table 
         String fileName = "";
-        
+
         // column family: general
         String md5checksum = "";
         String lastmodified = "";
         String size = "";
-        
+
         // column family: format
         String identity = "";
         String wellformed = "";
         String valid = "";
         String charset = "";
         String linebreak = "";
-        
+
         // column family: image
         String compressionScheme = "";
         String imageWidth = "";
         String imageHeight = "";
         try {
-            //  <---------------------- begin XML parsing --------------------------->
+            // <---------------------- begin XML parsing --------------------------->
             final XMLStreamReader reader = XMLInputFactory.newInstance().createXMLStreamReader(
                     new ByteArrayInputStream(val.toString().getBytes()));
 
@@ -70,7 +71,7 @@ public class CFMapper extends Mapper<FileLineWritable, Text, Text, Text> {
                     currentElement = reader.getLocalName();
                     break;
                 case CHARACTERS:
-                        // <----------------- fileinfo --------------------->
+                    // <----------------- fileinfo --------------------->
                     if (currentElement.equalsIgnoreCase("filename")) {
                         fileName += reader.getText();
                     } else if (currentElement.equalsIgnoreCase("md5checksum")) {
@@ -104,25 +105,24 @@ public class CFMapper extends Mapper<FileLineWritable, Text, Text, Text> {
             }
             reader.close();
 
-            //	<---------------------- end of XML parsing --------------------------->
-/*
-            keyText.set(fileName.trim());
-            valueText.set(md5checksum.trim());
+            //<---------------------- end of XML parsing --------------------------->
 
-            context.write(keyText, valueText);
-*/
+            // keyText.set(fileName.trim());
+            // valueText.set(md5checksum.trim());
+            // context.write(keyText, valueText);
+
             final Put inHbase = new Put(Bytes.toBytes(fileName.trim()));
 
             inHbase.add(Bytes.toBytes("general"), Bytes.toBytes("md5checksum"), Bytes.toBytes(md5checksum));
             inHbase.add(Bytes.toBytes("general"), Bytes.toBytes("size"), Bytes.toBytes(size));
             inHbase.add(Bytes.toBytes("general"), Bytes.toBytes("lastmodified"), Bytes.toBytes(lastmodified));
-            
+
             inHbase.add(Bytes.toBytes("format"), Bytes.toBytes("identity"), Bytes.toBytes(identity));
             inHbase.add(Bytes.toBytes("format"), Bytes.toBytes("wellformed"), Bytes.toBytes(wellformed));
             inHbase.add(Bytes.toBytes("format"), Bytes.toBytes("valid"), Bytes.toBytes(valid));
             inHbase.add(Bytes.toBytes("format"), Bytes.toBytes("charset"), Bytes.toBytes(charset));
             inHbase.add(Bytes.toBytes("format"), Bytes.toBytes("linebreak"), Bytes.toBytes(linebreak));
-            
+
             inHbase.add(Bytes.toBytes("image"), Bytes.toBytes("compressionscheme"), Bytes.toBytes(compressionScheme));
             inHbase.add(Bytes.toBytes("image"), Bytes.toBytes("imagewidth"), Bytes.toBytes(imageWidth));
             inHbase.add(Bytes.toBytes("image"), Bytes.toBytes("imageHeight"), Bytes.toBytes(imageHeight));
@@ -130,9 +130,9 @@ public class CFMapper extends Mapper<FileLineWritable, Text, Text, Text> {
             ht.put(inHbase);
 
             //	<--------------------------- job done -------------------------------->
-            /*		    System.out.println(String.format("stats :   filename : %s,  md5checksum: %s, size: %s, lastmodified: %s, wellformed: %s, valid: %s, charset: %s, linebreak: %s, compressionScheme: %s, imageWidth: %s, imageHeight: %s, ", 
-            		    		fileName, md5checksum, size, lastmodified, wellformed, valid, charset, linebreak, compressionScheme, imageWidth, imageHeight ));
-            */
+
+            // System.out.println(String.format("stats :   filename : %s,  md5checksum: %s, size: %s, lastmodified: %s, wellformed: %s, valid: %s, charset: %s, linebreak: %s, compressionScheme: %s, imageWidth: %s, imageHeight: %s, ", 
+            // fileName, md5checksum, size, lastmodified, wellformed, valid, charset, linebreak, compressionScheme, imageWidth, imageHeight ));
 
         } catch (Exception e) {
             e.printStackTrace();

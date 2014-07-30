@@ -4,11 +4,8 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.WritableComparable;
-
-import com.google.common.primitives.Longs;
 
 public class FileLineWritable implements WritableComparable<FileLineWritable> {
 
@@ -46,7 +43,7 @@ public class FileLineWritable implements WritableComparable<FileLineWritable> {
     }
 
     @Override
-    public boolean equals(Object obj) { 
+    public boolean equals(Object obj) {
         if (this == obj) {
             return true;
         }

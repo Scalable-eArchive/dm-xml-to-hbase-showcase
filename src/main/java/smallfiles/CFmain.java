@@ -27,25 +27,25 @@ public class CFmain extends Configured implements Tool {
     }
 
     @Override
-    public int run(String[] arg0) throws Exception {
-//        final long starttime = 
-//                System.currentTimeMillis();
+    public int run(String[] args) throws Exception {
+        // final long starttime = System.currentTimeMillis();
 
         final Configuration conf = HBaseConfiguration.create();
 
-// <-------- configuration needed for running the application from Eclipse ---------->        
-/*
-        conf.addResource(new Path("/home/funnyboy/hadoop-1.2.1/conf/core-site.xml"));
-        conf.addResource(new Path("/home/funnyboy/hadoop-1.2.1/conf/hdfs-site.xml"));
-        conf.addResource(new Path("/home/funnyboy/hbase-0.94.8/conf/hbase-site.xml"));
-*/
+        // <-------- configuration needed for running the application from Eclipse ---------->
+        
+        /*
+                conf.addResource(new Path("/home/funnyboy/hadoop-1.2.1/conf/core-site.xml"));
+                conf.addResource(new Path("/home/funnyboy/hadoop-1.2.1/conf/hdfs-site.xml"));
+                conf.addResource(new Path("/home/funnyboy/hbase-0.94.8/conf/hbase-site.xml"));
+        */
         conf.set("mapred.job.reuse.jvm.num.tasks", "-1");
-/*
-        conf.set("fs.default.name", "hdfs://localhost:9000");
-        conf.set("mapred.job.tracker", "localhost:9001");
-        conf.set("mapred.jar", "/home/funnyboy/Downloads/smallfiles.jar");
-*/        
-//        System.out.println("everything works from Eclipse");
+        /*
+                conf.set("fs.default.name", "hdfs://localhost:9000");
+                conf.set("mapred.job.tracker", "localhost:9001");
+                conf.set("mapred.jar", "/home/funnyboy/Downloads/smallfiles.jar");
+        */
+        // System.out.println("everything works from Eclipse");
 
         conf.set(CFInputFormat.START_TAG_KEY, "<fits");
         conf.set(CFInputFormat.END_TAG_KEY, "</fits>");
@@ -62,11 +62,11 @@ public class CFmain extends Configured implements Tool {
         TableMapReduceUtil.addDependencyJars(job.getConfiguration(), HTableInterface.class);
         TableMapReduceUtil.addDependencyJars(job.getConfiguration(), HTable.class);
 
-        final String input = arg0[0];
-        final String output = arg0[1];
+        final String input = args[0];
+        final String output = args[1];
 
-//        System.out.println("input: " + input);
-//        System.out.println("output: " + output);
+        // System.out.println("input: " + input);
+        // System.out.println("output: " + output);
 
         FileInputFormat.setInputPaths(job, new Path(input));
         final Path outPath = new Path(output);
@@ -75,8 +75,8 @@ public class CFmain extends Configured implements Tool {
         outPath.getFileSystem(conf).delete(outPath, true);
         job.waitForCompletion(true);
 
-//        final long endtime = System.currentTimeMillis();
-//        System.out.println("runtime: " + parseISO8601(endtime - starttime));
+        // final long endtime = System.currentTimeMillis();
+        // System.out.println("runtime: " + parseISO8601(endtime - starttime));
 
         return 0;
     }
