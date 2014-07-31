@@ -60,7 +60,7 @@ public class WordCount {
         // conf.set("fs.default.name", "hdfs://localhost:8020");
 
         Job job = Job.getInstance(conf);
-        job.setJarByClass(WordCount.class);
+        // job.setJarByClass(WordCount.class);
         job.setMapperClass(TokenCounterMapper.class);
         job.setReducerClass(TokenCounterReducer.class);
         job.setNumReduceTasks(2);
