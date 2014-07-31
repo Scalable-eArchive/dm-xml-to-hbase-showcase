@@ -61,6 +61,29 @@
     </build>
     
     <dependencies>
+		<dependency>
+			<groupId>org.apache.mahout</groupId>
+			<artifactId>mahout-examples</artifactId>
+			<version>0.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.mahout</groupId>
+					<artifactId>mahout-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.mahout</groupId>
+			<artifactId>mahout-core</artifactId>
+			<version>0.9</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.hadoop</groupId>
+					<artifactId>hadoop-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
         <!-- environment -->
         <dependency>
             <groupId>org.apache.hbase</groupId>
