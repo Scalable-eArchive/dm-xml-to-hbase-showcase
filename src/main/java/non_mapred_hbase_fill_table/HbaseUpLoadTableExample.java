@@ -14,9 +14,9 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 public class HbaseUpLoadTableExample {
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String[] args) throws IOException {
         Configuration config = HBaseConfiguration.create();
-        HTable table = new HTable(config, "User");
+        HTable table = new HTable(config, "User3");
         try {
 
             Put p = new Put(Bytes.toBytes("row1"));
@@ -26,8 +26,8 @@ public class HbaseUpLoadTableExample {
 
             Get g = new Get(Bytes.toBytes("row1"));
             Result r = table.get(g);
-            byte value[] = r.getValue(Bytes.toBytes("Id"), Bytes.toBytes("col1"));
-            byte value1[] = r.getValue(Bytes.toBytes("Name"), Bytes.toBytes("col2"));
+            byte[] value = r.getValue(Bytes.toBytes("Id"), Bytes.toBytes("col1"));
+            byte[] value1 = r.getValue(Bytes.toBytes("Name"), Bytes.toBytes("col2"));
             String valueStr = Bytes.toString(value);
             String valueStr1 = Bytes.toString(value1);
 

@@ -11,9 +11,9 @@ import org.apache.hadoop.hbase.client.HBaseAdmin;
 
 public class HbaseCreateTableExample {
 
-    public static void main(String args[]) throws IOException {
+    public static void main(String[] args) throws IOException {
         Configuration hc = HBaseConfiguration.create();
-        HTableDescriptor ht = new HTableDescriptor(TableName.valueOf("User"));
+        HTableDescriptor ht = new HTableDescriptor(TableName.valueOf("User3"));
         ht.addFamily(new HColumnDescriptor("Id"));
         ht.addFamily(new HColumnDescriptor("Name"));
 
