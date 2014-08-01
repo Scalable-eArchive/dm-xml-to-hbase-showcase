@@ -6,6 +6,7 @@ import java.util.StringTokenizer;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -15,20 +16,16 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class WordCount {
 
-    public static class TokenCounterMapper extends Mapper<Object, Text, Text, IntWritable> {
-
+    public static class TokenCounterMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         private static final IntWritable one = new IntWritable(1);
-
-        private final Text word;
-
-        public TokenCounterMapper() {
-            word = new Text();
-        }
+        private final Text word = new Text();
 
         @Override
-        public void map(Object key, Text value, Mapper<Object, Text, Text, IntWritable>.Context context)
+        public void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, IntWritable>.Context context)
                 throws IOException, InterruptedException {
-            for (StringTokenizer itr = new StringTokenizer(value.toString()); itr.hasMoreTokens();) {
+            String line = value.toString();
+            StringTokenizer itr = new StringTokenizer(line);
+            while (itr.hasMoreTokens()) {
                 word.set(itr.nextToken());
                 context.write(word, one);
                 // System.out.println("word: " + word + " one: " + one);
