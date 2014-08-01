@@ -3,7 +3,6 @@ package mapred_mahout_xml_parser;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.InputFormat;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -18,7 +17,7 @@ public final class CommonTableDriver {
         conf.set("xmlinput.end", "</property>");
 
         Job job = Job.getInstance(conf);
-        job.setJarByClass(CommonTableDriver.class);
+        // job.setJarByClass(CommonTableDriver.class);
         job.setInputFormatClass(XmlInputFormat.class); // TODO Mahout not compatible with Hadoop 2 
         job.setMapperClass(CommonTableMapper.class);
         job.setMapOutputKeyClass(Text.class);
@@ -33,7 +32,7 @@ public final class CommonTableDriver {
         job.waitForCompletion(true);
     }
 
-    public static void main(String args[]) throws Exception {
+    public static void main(String[] args) throws Exception {
         commonRunJob(args[0], args[1]);
     }
 

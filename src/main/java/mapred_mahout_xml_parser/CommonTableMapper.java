@@ -15,7 +15,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 
 public class CommonTableMapper extends Mapper<LongWritable, Text, Text, Text> {
 
-    private static final Log log = LogFactory.getLog(CommonTableMapper.class);
+    private static final Log LOG = LogFactory.getLog(CommonTableMapper.class);
 
     @Override
     public void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, Text>.Context context)
@@ -33,29 +33,30 @@ public class CommonTableMapper extends Mapper<LongWritable, Text, Text, Text> {
                 while (reader.hasNext()) {
                     int code = reader.next();
                     switch (code) {
-                    case 2: // '\002'
-                    case 3: // '\003'
-                    default:
-                        break;
-
                     case 1: // '\001'
                         currentElement = reader.getLocalName();
-                        log.info("currentElement: " + currentElement);
+                        LOG.info("currentElement: " + currentElement);
                         break;
-
+                    case 2: // '\002'
+                        break;
+                    case 3: // '\003'
+                        break;
                     case 4: // '\004'
                         if (currentElement.equalsIgnoreCase("name")) {
                             propertyRowID = propertyRowID + reader.getText();
                             break;
                         }
-                        if (currentElement.equalsIgnoreCase("value"))
+                        if (currentElement.equalsIgnoreCase("value")) {
                             propertyStatus = propertyStatus + reader.getText();
+                        }
+                        break;
+                    default:
                         break;
                     }
                 }
                 context.write(new Text(propertyRowID.trim()), new Text(propertyStatus.trim()));
 
-                log.info("job done");
+                LOG.info("job done");
                 System.out.println("job done");
 
             } finally {
