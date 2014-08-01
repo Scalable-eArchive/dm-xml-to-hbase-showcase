@@ -48,7 +48,7 @@ public class WordCount {
 
     }
 
-    public static void main(String args[]) throws Exception {
+    public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
 
         // configuration needed for running the application from Eclipse
