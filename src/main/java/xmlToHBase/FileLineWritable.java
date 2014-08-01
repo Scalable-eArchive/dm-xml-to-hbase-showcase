@@ -1,4 +1,4 @@
-package smallfiles;
+package xmlToHBase;
 
 import java.io.DataInput;
 import java.io.DataOutput;

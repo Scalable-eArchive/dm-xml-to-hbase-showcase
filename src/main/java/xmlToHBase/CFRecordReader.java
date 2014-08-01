@@ -1,4 +1,4 @@
-package smallfiles;
+package xmlToHBase;
 
 import java.io.IOException;
 

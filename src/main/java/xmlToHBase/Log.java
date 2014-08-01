@@ -1,4 +1,4 @@
-package smallfiles;
+package xmlToHBase;
 
 public class Log {
 

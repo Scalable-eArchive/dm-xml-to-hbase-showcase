@@ -1,4 +1,4 @@
-package smallfiles;
+package xmlToHBase;
 
 import static javax.xml.stream.XMLStreamConstants.CHARACTERS;
 import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
