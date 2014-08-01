@@ -7,6 +7,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 
 import org.apache.hadoop.hbase.client.HTable;
@@ -37,7 +38,7 @@ public class CFMapper extends Mapper<FileLineWritable, Text, Text, Text> {
      * The mapper parses xml, and puts valuable data to Hbase table.
      */
     @Override
-    public void map(FileLineWritable key, Text val, Context context) {
+    public void map(FileLineWritable key, Text val, Context context) throws IOException, InterruptedException {
         String currentElement = "";
 
         // This attribute will be the row in the Hbase table 
@@ -101,11 +102,14 @@ public class CFMapper extends Mapper<FileLineWritable, Text, Text, Text> {
                     }
 
                     break;
+                default:
+                    // ignore
+                    break;
                 }
             }
             reader.close();
 
-            //<---------------------- end of XML parsing --------------------------->
+            // <---------------------- end of XML parsing --------------------------->
 
             // keyText.set(fileName.trim());
             // valueText.set(md5checksum.trim());
@@ -129,13 +133,13 @@ public class CFMapper extends Mapper<FileLineWritable, Text, Text, Text> {
 
             ht.put(inHbase);
 
-            //	<--------------------------- job done -------------------------------->
+            // <--------------------------- job done -------------------------------->
 
             // System.out.println(String.format("stats :   filename : %s,  md5checksum: %s, size: %s, lastmodified: %s, wellformed: %s, valid: %s, charset: %s, linebreak: %s, compressionScheme: %s, imageWidth: %s, imageHeight: %s, ", 
             // fileName, md5checksum, size, lastmodified, wellformed, valid, charset, linebreak, compressionScheme, imageWidth, imageHeight ));
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (XMLStreamException e) {
+            throw new IOException(e);
         }
     }
 

@@ -50,6 +50,7 @@ public class CFRecordReader extends RecordReader<FileLineWritable, Text> {
 
     @Override
     public void initialize(InputSplit split, TaskAttemptContext context) {
+        // do nothing
     }
 
     @Override
