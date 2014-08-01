@@ -2,7 +2,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>ait</groupId>
+    <groupId>at.ait.eark</groupId>
     <artifactId>xml-to-hbase</artifactId>
     <name>xmlToHBase and examples</name>
     <description>Map-Reduce job to load selected XML elements from HDFS into HBase table and other Hadoop/HBase examples.</description>
@@ -15,6 +15,7 @@
         <!-- version of Hadoop infrastructure tools -->
         <hadoop.version>2.3.0-cdh5.0.0</hadoop.version>
         <hbase.version>0.96.1.1-cdh5.0.0</hbase.version>
+        <mahout.version>0.8-cdh5.0.0</mahout.version>
     </properties>
 
     <repositories>
@@ -64,7 +65,7 @@
 		<dependency>
 			<groupId>org.apache.mahout</groupId>
 			<artifactId>mahout-examples</artifactId>
-			<version>0.2</version>
+			<version>0.4</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.apache.mahout</groupId>
@@ -75,13 +76,7 @@
 		<dependency>
 			<groupId>org.apache.mahout</groupId>
 			<artifactId>mahout-core</artifactId>
-			<version>0.9</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.apache.hadoop</groupId>
-					<artifactId>hadoop-core</artifactId>
-				</exclusion>
-			</exclusions>
+			<version>${mahout.version}</version>
 		</dependency>
 
         <!-- environment -->
@@ -90,12 +85,24 @@
             <artifactId>hbase-client</artifactId>
             <version>${hbase.version}</version>
             <scope>provided</scope>
+            <exclusions>
+            	<exclusion>
+            		<artifactId>junit</artifactId>
+            		<groupId>junit</groupId>
+            	</exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-server</artifactId>
             <version>${hbase.version}</version>
             <scope>provided</scope>
+            <exclusions>
+            	<exclusion>
+            		<artifactId>junit</artifactId>
+            		<groupId>junit</groupId>
+            	</exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.hadoop</groupId>

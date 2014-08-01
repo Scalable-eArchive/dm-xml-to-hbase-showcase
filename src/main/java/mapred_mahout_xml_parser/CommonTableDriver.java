@@ -18,7 +18,7 @@ public final class CommonTableDriver {
 
         Job job = Job.getInstance(conf);
         // job.setJarByClass(CommonTableDriver.class);
-        job.setInputFormatClass(XmlInputFormat.class); // TODO Mahout not compatible with Hadoop 2 
+        job.setInputFormatClass(XmlInputFormat.class); 
         job.setMapperClass(CommonTableMapper.class);
         job.setMapOutputKeyClass(Text.class);
         job.setMapOutputValueClass(Text.class);
