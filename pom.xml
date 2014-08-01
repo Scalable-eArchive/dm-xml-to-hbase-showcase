@@ -4,8 +4,8 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>ait</groupId>
     <artifactId>dm-xml-to-hbase-showcase</artifactId>
-    <name>smallfiles</name>
-    <description>Map-Reduce job to load selected XML elements from HDFS into HBase table.</description>
+    <name>Hadoop and HBase examples</name>
+    <description>Map-Reduce job to load selected XML elements from HDFS into HBase table and other Hadoop/HBase examples.</description>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -88,6 +88,12 @@
         <dependency>
             <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-client</artifactId>
+            <version>${hbase.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.hbase</groupId>
+            <artifactId>hbase-server</artifactId>
             <version>${hbase.version}</version>
             <scope>provided</scope>
         </dependency>
